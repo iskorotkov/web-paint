@@ -13,7 +13,7 @@ namespace Plugins.Grayscale
         {
             for (var x = 0; x < image.Width; x++)
             {
-                for (var y = 0; y < image.Height / 2; y++)
+                for (var y = 0; y < image.Height; y++)
                 {
                     var color = image.GetPixel(x, y);
                     var sum = color.R + color.G + color.B;
