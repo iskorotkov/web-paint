@@ -2,26 +2,49 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.Logging;
 using Plugins.Base;
+using Plugins.Config;
 
 namespace Plugins.Loader
 {
     public class PluginLoader
     {
-        public IEnumerable<IPlugin> Load()
+        private readonly ILogger<PluginLoader> _logger;
+
+        public PluginLoader(ILogger<PluginLoader> logger)
         {
-            var plugins = new List<IPlugin>();
+            _logger = logger;
+        }
+
+        public Dictionary<string, IPlugin> Load(PluginsConfig config)
+        {
+            var plugins = new Dictionary<string, IPlugin>();
 
             var folder = AppDomain.CurrentDomain.BaseDirectory;
-            var files = Directory.GetFiles(folder, "*.dll");
 
-            var tempDomain = AppDomain.CreateDomain("Temp domain");
+            var files = config.Mode switch
+            {
+                PluginsMode.Automatic => Directory.GetFiles(folder, "*.dll"),
+                PluginsMode.Manual => Directory.GetFiles(folder, "*.dll")
+                    .Where(file =>
+                    {
+                        var name = Path.GetFileNameWithoutExtension(file);
+                        return config.Plugins.Contains(name);
+                    })
+                    .ToArray(),
+                _ => throw new NotImplementedException("Config mode isn't supported.")
+            };
+
+            _logger.LogInformation(
+                $"Loaded {files.Length} plugins out of {config.Plugins.Length} specified in config file");
 
             foreach (var file in files)
             {
                 try
                 {
-                    var assembly = tempDomain.Load(file);
+                    var assembly = Assembly.LoadFrom(file);
                     var types = assembly.GetExportedTypes()
                         .Where(t => t.IsAssignableTo(typeof(IPlugin)));
 
@@ -30,18 +53,16 @@ namespace Plugins.Loader
                         var plugin = Activator.CreateInstance(type);
                         if (plugin is IPlugin p)
                         {
-                            plugins.Add(p);
+                            plugins.Add(p.Name, p);
                         }
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    _logger.LogError(e, "Couldn't load a plugin %s", file);
                     throw;
                 }
             }
-
-            AppDomain.Unload(tempDomain);
 
             return plugins;
         }
