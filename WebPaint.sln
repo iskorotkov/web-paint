@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{88BC7F92
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{753DCC83-C5E0-40C3-9CCC-9AAAE2369E68}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -24,11 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.Grayscale", "src\Pl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.Config", "src\Plugins.Config\Plugins.Config.csproj", "{7163CDDF-E3F5-4B6E-9474-7B08C9866501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "src\Backend\Backend.csproj", "{9C88E096-2344-4234-95E8-53C91CE2237F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "src\Backend\Backend.csproj", "{9C88E096-2344-4234-95E8-53C91CE2237F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "src\Frontend\Frontend.csproj", "{73EC3860-0CA3-449C-8F73-9D0C103CE992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "src\Frontend\Frontend.csproj", "{73EC3860-0CA3-449C-8F73-9D0C103CE992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "src\DTOs\DTOs.csproj", "{E4F81542-3589-4678-9F98-528F23836D16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "src\DTOs\DTOs.csproj", "{E4F81542-3589-4678-9F98-528F23836D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
