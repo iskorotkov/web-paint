@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -27,7 +30,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public Dictionary<string, IPlugin> Get()
+        public IEnumerable<PluginDto> Get()
         {
             _logger.LogInformation("Plugins requested.");
 
@@ -39,7 +42,27 @@ namespace Backend.Controllers
                 : _configLoader.Load(configPath);
 
             _logger.LogInformation("Plugins were successfully loaded.");
-            return _pluginLoader.Load(config);
+            var plugins = _pluginLoader.Load(config);
+
+            var result = new List<PluginDto>();
+            foreach (var (name, plugin) in plugins)
+            {
+                var versionAttributes = plugin
+                    .GetType()
+                    .GetCustomAttributes<VersionAttribute>()
+                    .ToArray();
+
+                var version = versionAttributes.Length switch
+                {
+                    0 => "unknown",
+                    1 => $"v{versionAttributes[0].Major}.{versionAttributes[0].Minor}",
+                    _ => "undetermined"
+                };
+
+                result.Add(new PluginDto(name, version, plugin.Author));
+            }
+
+            return result;
         }
     }
 }

@@ -9,8 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTOs\DTOs.csproj" />
     <ProjectReference Include="..\Plugins.Base\Plugins.Base.csproj" />
+    <ProjectReference Include="..\Plugins.Grayscale\Plugins.Grayscale.csproj" />
+    <ProjectReference Include="..\Plugins.Inverse\Plugins.Inverse.csproj" />
     <ProjectReference Include="..\Plugins.Loader\Plugins.Loader.csproj" />
+    <ProjectReference Include="..\Plugins.Randomize\Plugins.Randomize.csproj" />
   </ItemGroup>
 
 </Project>

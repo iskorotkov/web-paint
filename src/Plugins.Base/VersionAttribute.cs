@@ -2,6 +2,7 @@
 
 namespace Plugins.Base
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public class VersionAttribute : Attribute
     {
         public VersionAttribute(int major, int minor)
