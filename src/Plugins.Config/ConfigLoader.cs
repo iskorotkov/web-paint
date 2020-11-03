@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -9,17 +10,30 @@ namespace Plugins.Config
     public class ConfigLoader
     {
         private readonly ILogger<ConfigLoader> _logger;
+        private readonly IConfiguration _configuration;
 
-        public ConfigLoader(ILogger<ConfigLoader> logger)
+        public ConfigLoader(ILogger<ConfigLoader> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         private readonly IDeserializer _deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
 
-        public PluginsConfig Load(string path)
+        public PluginsConfig Load()
+        {
+            var configPath = _configuration["Plugins:Config"];
+            _logger.LogTrace("Config path is %s", configPath);
+
+            var config = string.IsNullOrEmpty(configPath)
+                ? new PluginsConfig()
+                : ReadFromFile(configPath);
+            return config;
+        }
+
+        private PluginsConfig ReadFromFile(string path)
         {
             try
             {
