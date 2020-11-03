@@ -3,6 +3,7 @@ using Plugins.Base;
 
 namespace Plugins.Grayscale
 {
+    [Version(1, 0)]
     public class Grayscale : IPlugin
     {
         public string Name => "To grayscale";
