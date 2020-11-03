@@ -7,7 +7,7 @@ using Microsoft.OpenApi.Models;
 using Plugins.Config;
 using Plugins.Loader;
 
-namespace App.Backend
+namespace Backend
 {
     public class Startup
     {

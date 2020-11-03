@@ -46,7 +46,7 @@ namespace Plugins.Loader
                 {
                     var assembly = Assembly.LoadFrom(file);
                     var types = assembly.GetExportedTypes()
-                        .Where(t => t.IsAssignableTo(typeof(IPlugin)));
+                        .Where(t => !t.IsInterface && t.IsAssignableTo(typeof(IPlugin)));
 
                     foreach (var type in types)
                     {
@@ -60,7 +60,6 @@ namespace Plugins.Loader
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Couldn't load a plugin %s", file);
-                    throw;
                 }
             }
 

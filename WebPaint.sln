@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugins.Grayscale", "src\Pl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins.Config", "src\Plugins.Config\Plugins.Config.csproj", "{7163CDDF-E3F5-4B6E-9474-7B08C9866501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Backend", "src\App.Backend\App.Backend.csproj", "{9C88E096-2344-4234-95E8-53C91CE2237F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "src\Backend\Backend.csproj", "{9C88E096-2344-4234-95E8-53C91CE2237F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "src\Frontend\Frontend.csproj", "{73EC3860-0CA3-449C-8F73-9D0C103CE992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{9C88E096-2344-4234-95E8-53C91CE2237F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C88E096-2344-4234-95E8-53C91CE2237F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C88E096-2344-4234-95E8-53C91CE2237F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EC3860-0CA3-449C-8F73-9D0C103CE992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EC3860-0CA3-449C-8F73-9D0C103CE992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EC3860-0CA3-449C-8F73-9D0C103CE992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EC3860-0CA3-449C-8F73-9D0C103CE992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{E4793B02-0A0C-4269-A740-B27E91347667} = {DAB4FEED-DD91-4E2E-B046-15B06E5A5A6A}
 		{7163CDDF-E3F5-4B6E-9474-7B08C9866501} = {DAB4FEED-DD91-4E2E-B046-15B06E5A5A6A}
 		{9C88E096-2344-4234-95E8-53C91CE2237F} = {DAB4FEED-DD91-4E2E-B046-15B06E5A5A6A}
+		{73EC3860-0CA3-449C-8F73-9D0C103CE992} = {DAB4FEED-DD91-4E2E-B046-15B06E5A5A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B4637DAF-D23A-4E61-8A8B-48CE558F2810}

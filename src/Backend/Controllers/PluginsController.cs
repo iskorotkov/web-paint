@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Plugins.Base;
 using Plugins.Config;
 using Plugins.Loader;
 
-namespace App.Backend.Controllers
+namespace Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
