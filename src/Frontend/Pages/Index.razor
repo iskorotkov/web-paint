@@ -1,5 +1,23 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject HttpClient HttpClient
 
-Welcome to your new app.
+@if (Base64Image != null)
+{
+    <img class="img__bg--fill" src="@($"data:image/jpeg;base64,{Base64Image}")" alt="Default background image to apply filters to"/>
+}
+else
+{
+    <span>Wait for image to load...</span>
+}
+
+@code
+{
+    private string Base64Image { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
+        Base64Image = Convert.ToBase64String(response);
+    }
+}
