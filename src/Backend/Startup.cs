@@ -25,7 +25,11 @@ namespace Backend
             services.AddCors(options =>
             {
                 options.AddPolicy(_allowFrontendRequests,
-                    builder => { builder.WithOrigins("https://localhost:44311"); });
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44311");
+                        builder.WithHeaders("content-type");
+                    });
             });
 
             services.AddControllers();

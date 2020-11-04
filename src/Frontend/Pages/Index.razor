@@ -11,23 +11,79 @@ else
     <span>Wait for image to load...</span>
 }
 
-@if (Plugins != null)
+@if (LoadedPlugins != null)
 {
-    <div class="overlay__plugins">
-        <PluginsList Plugins="@Plugins"/>
+    <div class="plugins-overlay__box plugins-overlay__box--loaded">
+        <span class="plugins-overlay__title">Loaded plugins</span>
+
+        <PluginsList Plugins="@LoadedPlugins" PluginButtonClicked="@AddFilter"
+                     ButtonClass="btn btn-outline-success" ButtonIcon="oi oi-plus"/>
+
+        <div class="plugins-overlay__buttons-row">
+            <button class="plugins-overlay__button overlay__button--primary" @onclick="@UpdateLoadedPlugins">Update loaded plugins</button>
+        </div>
     </div>
 }
+
+<div class="plugins-overlay__box plugins-overlay__box--applied">
+    <span class="plugins-overlay__title">Applied plugins</span>
+
+    <PluginsList Plugins="@AppliedPlugins" PluginButtonClicked="@RemoveFilter"
+                 ButtonClass="btn btn-outline-danger" ButtonIcon="oi oi-x"/>
+
+    <div class="plugins-overlay__buttons-row">
+        <button class="plugins-overlay__button overlay__button--primary" @onclick="@UpdateImage">Update image</button>
+        <button class="plugins-overlay__button overlay__button--secondary" @onclick="@ClearPlugins">Clear plugins</button>
+    </div>
+</div>
 
 @code
 {
     private string Base64Image { get; set; }
-    private List<PluginDto> Plugins { get; set; }
+    private List<PluginDto> LoadedPlugins { get; set; }
+    private List<PluginDto> AppliedPlugins { get; set; } = new List<PluginDto>();
 
     protected override async Task OnInitializedAsync()
     {
-        var image = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
-        Base64Image = Convert.ToBase64String(image);
+        await UpdateImage();
+        await UpdateLoadedPlugins();
+    }
 
-        Plugins = await HttpClient.GetFromJsonAsync<List<PluginDto>>("https://localhost:44358/api/plugins");
+    private void AddFilter(PluginDto plugin)
+    {
+        AppliedPlugins.Add(plugin);
+    }
+
+    private void RemoveFilter(PluginDto plugin)
+    {
+        AppliedPlugins.Remove(plugin);
+    }
+
+    private async Task UpdateImage()
+    {
+        byte[] image;
+        if (AppliedPlugins.Count > 0)
+        {
+            var x = await HttpClient.PostAsJsonAsync("https://localhost:44358/api/images", AppliedPlugins);
+            x.EnsureSuccessStatusCode();
+
+            image = await x.Content.ReadAsByteArrayAsync();
+        }
+        else
+        {
+            image = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
+        }
+
+        Base64Image = Convert.ToBase64String(image);
+    }
+
+    private async Task UpdateLoadedPlugins()
+    {
+        LoadedPlugins = await HttpClient.GetFromJsonAsync<List<PluginDto>>("https://localhost:44358/api/plugins");
+    }
+
+    private void ClearPlugins()
+    {
+        AppliedPlugins = new List<PluginDto>();
     }
 }

@@ -1,6 +1,6 @@
 ﻿<div class="plugin__box">
-    <button class="btn btn-outline-success" @onclick="@OnClicked">
-        <span class="oi oi-plus"></span>
+    <button class="@ButtonClass" @onclick="@OnClicked">
+        <span class="@ButtonIcon"></span>
     </button>
 
     <div class="plugin__info">
@@ -17,6 +17,12 @@
 
     [Parameter]
     public EventCallback<PluginDto> Clicked { get; set; }
+
+    [Parameter]
+    public string ButtonClass { get; set; } = "btn";
+
+    [Parameter]
+    public string ButtonIcon { get; set; } = "";
 
     private async Task OnClicked()
     {
