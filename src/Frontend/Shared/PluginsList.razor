@@ -1,0 +1,17 @@
+﻿<div class="plugins__box">
+    <ul class="plugins__list">
+        @foreach (var plugin in Plugins)
+        {
+            <li class="plugins__item">
+                <PluginEntry Plugin="@plugin"/>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+
+    [Parameter]
+    public List<PluginDto> Plugins { get; set; }
+
+}

@@ -1,0 +1,9 @@
+﻿<div class="plugin__box">
+    <span class="plugin__name">@Plugin.Name</span>
+    <span class="plugin_author">@Plugin.Author</span>
+    <span class="plugin__version">@Plugin.Version</span>
+</div>
+
+@code {
+    [Parameter] public PluginDto Plugin { get; set; }
+}

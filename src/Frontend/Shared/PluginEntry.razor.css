@@ -1,0 +1,28 @@
+﻿.plugin__box {
+    height: 2.5em;
+    width: 15em;
+    margin: 0.5em;
+    position: relative;
+}
+
+.plugin__name {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.plugin_author {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.plugin__version {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-style: italic;
+    font-size: 0.8em;
+}

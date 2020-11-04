@@ -1,0 +1,10 @@
+﻿.plugins__box { }
+
+.plugins__list {
+    padding: 0;
+    margin: 0;
+}
+
+.plugins__item {
+    list-style-type: none;
+}

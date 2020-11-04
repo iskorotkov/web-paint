@@ -11,13 +11,23 @@ else
     <span>Wait for image to load...</span>
 }
 
+@if (Plugins != null)
+{
+    <div class="overlay__plugins">
+        <PluginsList Plugins="@Plugins"/>
+    </div>
+}
+
 @code
 {
     private string Base64Image { get; set; }
+    private List<PluginDto> Plugins { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
-        Base64Image = Convert.ToBase64String(response);
+        var image = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
+        Base64Image = Convert.ToBase64String(image);
+
+        Plugins = await HttpClient.GetFromJsonAsync<List<PluginDto>>("https://localhost:44358/api/plugins");
     }
 }
