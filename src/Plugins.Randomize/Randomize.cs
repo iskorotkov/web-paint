@@ -10,8 +10,8 @@ namespace Plugins.Randomize
         public string Name => "Add noise";
         public string Author => "Korotkov Ivan";
 
-        private const int From = -5;
-        private const int To = 5;
+        private const int From = -64;
+        private const int To = 64;
 
         public void Transform(Bitmap image)
         {
@@ -22,7 +22,11 @@ namespace Plugins.Randomize
                 {
                     var value = random.Next(From, To + 1);
                     var c = image.GetPixel(x, y);
-                    c = Color.FromArgb(c.A + value, c.R + value, c.G + value, c.B + value);
+                    c = Color.FromArgb(
+                        c.A,
+                        Math.Clamp(c.R + value, 0, 255),
+                        Math.Clamp(c.G + value, 0, 255),
+                        Math.Clamp(c.B + value, 0, 255));
                     image.SetPixel(x, y, c);
                 }
             }
