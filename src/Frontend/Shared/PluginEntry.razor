@@ -1,9 +1,29 @@
 ﻿<div class="plugin__box">
-    <span class="plugin__name">@Plugin.Name</span>
-    <span class="plugin_author">@Plugin.Author</span>
-    <span class="plugin__version">@Plugin.Version</span>
+    <button class="btn btn-outline-success" @onclick="@OnClicked">
+        <span class="oi oi-plus"></span>
+    </button>
+
+    <div class="plugin__info">
+        <span class="plugin__name">@Value.Name</span>
+        <span class="plugin_author">@Value.Author</span>
+        <span class="plugin__version">@Value.Version</span>
+    </div>
 </div>
 
 @code {
-    [Parameter] public PluginDto Plugin { get; set; }
+
+    [Parameter]
+    public PluginDto Value { get; set; }
+
+    [Parameter]
+    public EventCallback<PluginDto> Clicked { get; set; }
+
+    private async Task OnClicked()
+    {
+        if (Clicked.HasDelegate)
+        {
+            await Clicked.InvokeAsync(Value);
+        }
+    }
+
 }

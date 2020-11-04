@@ -2,7 +2,8 @@
     height: 2.5em;
     width: 15em;
     margin: 0.5em;
-    position: relative;
+    display: flex;
+    gap: 0.5em;
 }
 
 .plugin__name {
@@ -26,3 +27,5 @@
     font-style: italic;
     font-size: 0.8em;
 }
+
+.plugin__info { position: relative; flex: 1; }
