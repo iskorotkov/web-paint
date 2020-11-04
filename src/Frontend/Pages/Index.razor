@@ -16,11 +16,18 @@ else
     <div class="plugins-overlay__box plugins-overlay__box--loaded">
         <span class="plugins-overlay__title">Loaded plugins</span>
 
-        <PluginsList Plugins="@LoadedPlugins" PluginButtonClicked="@AddFilter"
-                     ButtonClass="btn btn-outline-success" ButtonIcon="oi oi-plus"/>
+        <PluginsList Plugins="@LoadedPlugins">
+            <PluginTemplate>
+                <PluginEntry Value="@context" Clicked="@AddFilter"
+                             ButtonClass="btn btn-outline-success" ButtonIcon="oi oi-plus"/>
+            </PluginTemplate>
+        </PluginsList>
 
         <div class="plugins-overlay__buttons-row">
-            <button class="plugins-overlay__button overlay__button--primary" @onclick="@UpdateLoadedPlugins">Update loaded plugins</button>
+            <button class="plugins-overlay__button plugins-overlay__button--primary"
+                    @onclick="@UpdateLoadedPlugins">
+                Update loaded plugins
+            </button>
         </div>
     </div>
 }
@@ -28,12 +35,23 @@ else
 <div class="plugins-overlay__box plugins-overlay__box--applied">
     <span class="plugins-overlay__title">Applied plugins</span>
 
-    <PluginsList Plugins="@AppliedPlugins" PluginButtonClicked="@RemoveFilter"
-                 ButtonClass="btn btn-outline-danger" ButtonIcon="oi oi-x"/>
+    <PluginsList Plugins="@AppliedPlugins">
+        <PluginTemplate>
+            <PluginEntry Value="@context" Clicked="@RemoveFilter"
+                         ButtonClass="btn btn-outline-danger" ButtonIcon="oi oi-x"/>
+        </PluginTemplate>
+    </PluginsList>
 
     <div class="plugins-overlay__buttons-row">
-        <button class="plugins-overlay__button overlay__button--primary" @onclick="@UpdateImage">Update image</button>
-        <button class="plugins-overlay__button overlay__button--secondary" @onclick="@ClearPlugins">Clear plugins</button>
+        <button class="plugins-overlay__button plugins-overlay__button--primary"
+                @onclick="@UpdateImage">
+            Update image
+        </button>
+
+        <button class="plugins-overlay__button overlay__button--secondary"
+                @onclick="@ClearPlugins">
+            Clear plugins
+        </button>
     </div>
 </div>
 

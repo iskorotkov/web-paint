@@ -3,8 +3,7 @@
         @foreach (var plugin in Plugins)
         {
             <li class="plugins__item">
-                <PluginEntry Value="@plugin" Clicked="@OnPluginButtonClicked"
-                             ButtonClass="@ButtonClass" ButtonIcon="@ButtonIcon"/>
+                @PluginTemplate(plugin)
             </li>
         }
     </ul>
@@ -16,20 +15,6 @@
     public List<PluginDto> Plugins { get; set; }
 
     [Parameter]
-    public EventCallback<PluginDto> PluginButtonClicked { get; set; }
-
-    [Parameter]
-    public string ButtonClass { get; set; }
-
-    [Parameter]
-    public string ButtonIcon { get; set; }
-
-    private async Task OnPluginButtonClicked(PluginDto plugin)
-    {
-        if (PluginButtonClicked.HasDelegate)
-        {
-            await PluginButtonClicked.InvokeAsync(plugin);
-        }
-    }
+    public RenderFragment<PluginDto> PluginTemplate { get; set; }
 
 }
