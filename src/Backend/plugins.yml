@@ -1,0 +1,5 @@
+mode: manual
+plugins:
+  - plugins.grayscale
+  - plugins.randomize
+  - abc

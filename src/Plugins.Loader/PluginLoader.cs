@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Plugins.Base;
 using Plugins.Config;
+using YamlDotNet.Core;
 
 namespace Plugins.Loader
 {
@@ -24,7 +25,22 @@ namespace Plugins.Loader
         {
             var plugins = new Dictionary<string, IPlugin>();
 
-            var config = _configLoader.Load();
+            PluginsConfig config;
+            try
+            {
+                config = _configLoader.Load();
+            }
+            catch (IOException)
+            {
+                _logger.LogError("Couldn't open specified config file. Using default config instead");
+                config = new PluginsConfig();
+            }
+            catch (YamlException)
+            {
+                _logger.LogError("Couldn't parse specified config file. Using default config instead");
+                config = new PluginsConfig();
+            }
+            
             var folder = AppDomain.CurrentDomain.BaseDirectory;
             var files = GetPluginFiles(folder, config);
 
@@ -74,7 +90,8 @@ namespace Plugins.Loader
                     .Where(file =>
                     {
                         var name = Path.GetFileNameWithoutExtension(file);
-                        return config.Plugins.Contains(name);
+                        return config.Plugins.Any(plugin =>
+                            string.Equals(plugin, name, StringComparison.InvariantCultureIgnoreCase));
                     })
                     .ToArray(),
                 _ => throw new NotImplementedException("Config mode isn't supported.")
