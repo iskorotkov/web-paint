@@ -33,12 +33,12 @@ namespace Plugins.Loader
             catch (IOException)
             {
                 _logger.LogError("Couldn't open specified config file. Using default config instead");
-                config = new PluginsConfig();
+                throw;
             }
             catch (YamlException)
             {
                 _logger.LogError("Couldn't parse specified config file. Using default config instead");
-                config = new PluginsConfig();
+                throw;
             }
             
             var folder = AppDomain.CurrentDomain.BaseDirectory;
@@ -60,6 +60,7 @@ namespace Plugins.Loader
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Couldn't load a plugin %s", file);
+                    throw;
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject HttpClient HttpClient
+@inject IJSRuntime Js
 
 @if (Base64Image != null)
 {
@@ -58,7 +59,7 @@ else
 @code
 {
     private string Base64Image { get; set; }
-    private List<PluginDto> LoadedPlugins { get; set; }
+    private List<PluginDto> LoadedPlugins { get; set; } = new List<PluginDto>();
     private List<PluginDto> AppliedPlugins { get; set; } = new List<PluginDto>();
 
     protected override async Task OnInitializedAsync()
@@ -79,25 +80,46 @@ else
 
     private async Task UpdateImage()
     {
-        byte[] image;
-        if (AppliedPlugins.Count > 0)
+        try
         {
-            var x = await HttpClient.PostAsJsonAsync("https://localhost:44358/api/images", AppliedPlugins);
-            x.EnsureSuccessStatusCode();
+            var response = await HttpClient.PostAsJsonAsync("https://localhost:44358/api/images", AppliedPlugins);
+            if (response.IsSuccessStatusCode)
+            {
+                var image = await response.Content.ReadAsByteArrayAsync();
+                Base64Image = Convert.ToBase64String(image);
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                await Js.InvokeVoidAsync("alert", error);
 
-            image = await x.Content.ReadAsByteArrayAsync();
+            }
         }
-        else
+        catch (HttpRequestException)
         {
-            image = await HttpClient.GetByteArrayAsync("https://localhost:44358/api/images");
+            await Js.InvokeVoidAsync("alert", "Failed to fetch data from server");
         }
-
-        Base64Image = Convert.ToBase64String(image);
     }
 
     private async Task UpdateLoadedPlugins()
     {
-        LoadedPlugins = await HttpClient.GetFromJsonAsync<List<PluginDto>>("https://localhost:44358/api/plugins");
+        try
+        {
+            var response = await HttpClient.GetAsync("https://localhost:44358/api/plugins");
+            if (response.IsSuccessStatusCode)
+            {
+                LoadedPlugins = await HttpClient.GetFromJsonAsync<List<PluginDto>>("https://localhost:44358/api/plugins");
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                await Js.InvokeVoidAsync("alert", error);
+            }
+        }
+        catch (HttpRequestException)
+        {
+            await Js.InvokeVoidAsync("alert", "Failed to fetch data from server");
+        }
     }
 
     private void ClearPlugins()
