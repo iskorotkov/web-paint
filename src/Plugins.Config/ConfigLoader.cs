@@ -45,6 +45,7 @@ namespace Plugins.Config
                 }
 
                 var config = _deserializer.Deserialize<PluginsConfig>(yaml);
+                config.Plugins ??= new string[0];
                 return config;
             }
             catch (Exception e)
