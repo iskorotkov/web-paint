@@ -1,6 +1,6 @@
 {
-  "name": "App.Frontend",
-  "short_name": "App.Frontend",
+  "name": "WebPaint",
+  "short_name": "WebPaint",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
